@@ -32,5 +32,5 @@ git push origin master
 cd ..
 
 echo "✅ Wiki setup complete!"
-echo "📖 Your wiki is now at: https://github.com/yourusername/collectr/wiki"
+echo "📖 Your wiki is now at: https://github.com/eightythreeapps/collectr/wiki"
 echo "🔄 Wiki content is version controlled in ./wiki/ subdirectory"
