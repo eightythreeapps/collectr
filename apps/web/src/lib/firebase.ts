@@ -24,6 +24,7 @@ export const storage = getStorage(app);
 if (process.env.NODE_ENV === 'development') {
   // Only connect to emulators if not already connected
   try {
+    // @ts-expect-error - Firebase internal config check
     if (!auth.config.emulator) {
       connectAuthEmulator(auth, 'http://localhost:9099');
     }
@@ -41,6 +42,7 @@ if (process.env.NODE_ENV === 'development') {
   }
 
   try {
+    // @ts-expect-error - Firebase storage host check
     if (!storage.host.includes('localhost')) {
       connectStorageEmulator(storage, 'localhost', 9199);
     }

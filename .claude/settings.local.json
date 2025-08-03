@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npm install:*)",
+      "Bash(pnpm run:*)",
+      "Bash(pnpm --filter @collectr/api build)",
+      "Bash(chmod:*)",
+      "Bash(pnpm --filter @collectr/web build)"
     ],
     "deny": []
   }

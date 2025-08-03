@@ -45,7 +45,7 @@ export class RAWGService {
 
   async searchGames(query: string, platform?: string, limit = 20, offset = 0): Promise<RAWGGame[]> {
     try {
-      const params: any = {
+      const params: Record<string, any> = {
         search: query,
         page_size: Math.min(limit, 40), // RAWG max is 40
         page: Math.floor(offset / limit) + 1,
@@ -121,7 +121,7 @@ export class RAWGService {
 
   // Helper method to map RAWG platform to our enum
   static mapPlatform(rawgPlatforms?: RAWGGame['platforms']): string {
-    if (!rawgPlatforms?.length) return 'Other';
+    if (!rawgPlatforms || !rawgPlatforms.length) return 'Other';
 
     const platformMapping: Record<string, string> = {
       'nintendo-entertainment-system': 'NES',
@@ -154,8 +154,10 @@ export class RAWGService {
 
     // Find the first matching platform
     for (const platform of rawgPlatforms) {
-      const mapped = platformMapping[platform.platform.slug];
-      if (mapped) return mapped;
+      if (platform?.platform?.slug) {
+        const mapped = platformMapping[platform.platform.slug];
+        if (mapped) return mapped;
+      }
     }
 
     return 'Other';

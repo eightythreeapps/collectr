@@ -6,7 +6,7 @@
     "lib": ["ES2022"],
     "strict": true,
     "noImplicitAny": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": true,
     "declaration": true,
     "declarationMap": true,

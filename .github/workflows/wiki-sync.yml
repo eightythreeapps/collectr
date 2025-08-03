@@ -1,0 +1,65 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/wiki/**'
+      - 'wiki/**'
+  workflow_dispatch:
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Sync wiki content
+      run: |
+        # Ensure wiki submodule exists
+        if [ ! -d "wiki" ]; then
+          echo "Wiki submodule not found, adding it..."
+          git submodule add https://github.com/${{ github.repository }}.wiki.git wiki
+        fi
+        
+        # Update wiki submodule
+        cd wiki
+        git pull origin master || git pull origin main
+        cd ..
+        
+        # Copy updated documentation
+        cp docs/wiki/*.md wiki/
+        
+        # Commit and push changes
+        cd wiki
+        if git diff --quiet; then
+          echo "No changes to sync"
+        else
+          git add .
+          git commit -m "Auto-sync wiki from main repository
+          
+          Updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          
+          🤖 Automated sync via GitHub Actions"
+          git push origin master || git push origin main
+        fi
+
+    - name: Update submodule reference
+      run: |
+        if git diff --quiet wiki; then
+          echo "No submodule updates"
+        else
+          git add wiki
+          git commit -m "Update wiki submodule reference"
+          git push origin main
+        fi

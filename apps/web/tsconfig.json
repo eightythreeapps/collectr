@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "strict": true,
     "noImplicitAny": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
     "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,

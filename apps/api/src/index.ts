@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
@@ -15,14 +16,16 @@ const HOST = process.env.HOST || '0.0.0.0';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const server = Fastify({
-  logger: {
-    level: NODE_ENV === 'development' ? 'debug' : 'info',
-    transport: NODE_ENV === 'development' ? {
+  logger: NODE_ENV === 'development' ? {
+    level: 'debug',
+    transport: {
       target: 'pino-pretty',
       options: {
         colorize: true,
       },
-    } : undefined,
+    },
+  } : {
+    level: 'info',
   },
 });
 

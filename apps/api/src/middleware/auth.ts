@@ -43,10 +43,12 @@ export async function authMiddleware(
   request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
-  const { url, method } = request;
+  const { method } = request;
+  // Get URL pathname without query parameters
+  const pathname = new URL(request.url, 'http://localhost').pathname;
 
   // Skip authentication for public routes
-  if (isPublicRoute(url, method)) {
+  if (isPublicRoute(pathname, method)) {
     return;
   }
 
@@ -67,7 +69,7 @@ export async function authMiddleware(
     
     request.user = {
       uid: decodedToken.uid,
-      email: decodedToken.email,
+      email: decodedToken.email || undefined,
       emailVerified: decodedToken.email_verified || false,
     };
   } catch (error) {

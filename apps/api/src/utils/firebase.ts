@@ -51,6 +51,11 @@ export async function initializeFirebase() {
       }
     }
 
+    // Initialize services after app is ready
+    db = getFirestore();
+    auth = getAuth();
+    storage = getStorage();
+    
     firebaseInitialized = true;
     console.log('✅ Firebase Admin initialized');
   } catch (error) {
@@ -59,7 +64,7 @@ export async function initializeFirebase() {
   }
 }
 
-// Export initialized services
-export const db = getFirestore();
-export const auth = getAuth();
-export const storage = getStorage();
+// Export services - will be initialized after initializeFirebase is called
+export let db: ReturnType<typeof getFirestore>;
+export let auth: ReturnType<typeof getAuth>;
+export let storage: ReturnType<typeof getStorage>;

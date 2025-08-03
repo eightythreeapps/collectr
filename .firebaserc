@@ -1,15 +1,15 @@
 {
   "projects": {
-    "default": "collectr-dev",
-    "dev": "collectr-dev",
+    "default": "collectr-8ae95",
+    "dev": "collectr-8ae95",
     "staging": "collectr-stg", 
     "production": "collectr-prod"
   },
   "targets": {
-    "collectr-dev": {
+    "collectr-8ae95": {
       "hosting": {
         "web": [
-          "collectr-dev"
+          "collectr-8ae95"
         ]
       }
     },
