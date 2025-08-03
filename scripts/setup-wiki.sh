@@ -4,7 +4,7 @@ echo "🔧 Setting up automated wiki with version control..."
 
 # 1. Clone the wiki as a submodule
 echo "📂 Adding wiki as git submodule..."
-git submodule add https://github.com/yourusername/collectr.wiki.git wiki
+git submodule add https://github.com/eightythreeapps/collectr.wiki.git wiki
 
 # 2. Copy our documentation to the wiki
 echo "📋 Copying documentation to wiki..."
