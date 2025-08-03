@@ -1,0 +1,30 @@
+{
+  "name": "collectr",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Physical game collection platform - MVP",
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "pnpm -r --parallel run dev",
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test",
+    "type-check": "pnpm -r run type-check",
+    "clean": "pnpm -r run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

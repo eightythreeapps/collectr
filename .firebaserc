@@ -1,0 +1,32 @@
+{
+  "projects": {
+    "default": "collectr-dev",
+    "dev": "collectr-dev",
+    "staging": "collectr-stg", 
+    "production": "collectr-prod"
+  },
+  "targets": {
+    "collectr-dev": {
+      "hosting": {
+        "web": [
+          "collectr-dev"
+        ]
+      }
+    },
+    "collectr-stg": {
+      "hosting": {
+        "web": [
+          "collectr-stg"
+        ]
+      }
+    },
+    "collectr-prod": {
+      "hosting": {
+        "web": [
+          "collectr-prod"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

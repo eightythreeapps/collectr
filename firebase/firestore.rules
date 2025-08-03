@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isSelf(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function isValidUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    // Users collection - user profiles
+    match /users/{userId} {
+      allow read: if isSelf(userId) || 
+                     (resource.data.isPrivate == false && 
+                      ['handle', 'displayName', 'photoURL', 'bio', 'location', 'website'].hasAll(request.auth.uid));
+      allow create: if isSelf(userId) && isValidUser() &&
+                       request.resource.data.keys().hasAll(['uid', 'email', 'createdAt', 'updatedAt', 'lastLoginAt']) &&
+                       request.resource.data.uid == request.auth.uid &&
+                       request.resource.data.email == request.auth.token.email;
+      allow update: if isSelf(userId) && isValidUser() &&
+                       request.resource.data.uid == resource.data.uid &&
+                       request.resource.data.email == resource.data.email &&
+                       request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false; // Users cannot be deleted through Firestore
+    }
+
+    // Games collection - game metadata
+    match /games/{gameId} {
+      allow read: if true; // Games are publicly readable
+      allow create: if isValidUser() &&
+                       request.resource.data.keys().hasAll(['title', 'platform', 'publisher', 'year', 'createdBy', 'createdAt', 'updatedAt']) &&
+                       request.resource.data.createdBy == request.auth.uid &&
+                       request.resource.data.pendingReview == true;
+      allow update: if isValidUser() && 
+                       (resource.data.createdBy == request.auth.uid || 
+                        request.auth.token.admin == true) &&
+                       request.resource.data.createdBy == resource.data.createdBy &&
+                       request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false; // Games cannot be deleted, only hidden/archived
+    }
+
+    // Shelves collection - user collections
+    match /shelves/{userId} {
+      allow read: if isSelf(userId) || 
+                     (resource != null && resource.data.isPublic == true);
+      allow create: if isSelf(userId) && isValidUser() &&
+                       request.resource.data.userId == request.auth.uid;
+      allow update: if isSelf(userId) && isValidUser() &&
+                       request.resource.data.userId == resource.data.userId &&
+                       request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false; // Shelves cannot be deleted, only cleared
+
+      // Shelf items subcollection
+      match /items/{itemId} {
+        allow read: if isSelf(userId) || 
+                       (get(/databases/$(database)/documents/shelves/$(userId)).data.isPublic == true);
+        allow create: if isSelf(userId) && isValidUser() &&
+                         request.resource.data.keys().hasAll(['gameRef', 'gameId', 'condition', 'addedAt', 'updatedAt']) &&
+                         exists(request.resource.data.gameRef);
+        allow update: if isSelf(userId) && isValidUser() &&
+                         request.resource.data.gameRef == resource.data.gameRef &&
+                         request.resource.data.gameId == resource.data.gameId &&
+                         request.resource.data.addedAt == resource.data.addedAt;
+        allow delete: if isSelf(userId) && isValidUser();
+      }
+    }
+
+    // Game reviews/ratings (future feature)
+    match /reviews/{reviewId} {
+      allow read: if true; // Reviews are publicly readable
+      allow create: if isValidUser() &&
+                       request.resource.data.userId == request.auth.uid &&
+                       exists(request.resource.data.gameRef);
+      allow update: if isValidUser() && 
+                       resource.data.userId == request.auth.uid &&
+                       request.resource.data.userId == resource.data.userId &&
+                       request.resource.data.gameRef == resource.data.gameRef;
+      allow delete: if isValidUser() && resource.data.userId == request.auth.uid;
+    }
+
+    // Admin/moderation collection (restricted)
+    match /admin/{document=**} {
+      allow read, write: if isSignedIn() && 
+                            request.auth.token.admin == true;
+    }
+
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
