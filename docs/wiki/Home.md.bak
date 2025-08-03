@@ -14,7 +14,7 @@ Welcome to the Collectr MVP development documentation. This wiki maintains detai
 
 ### 📝 Development Sessions
 - [Session Template](./Session-Template) - Template for documenting development work
-- [2025-08-03: Wiki System Testing](./2025-08-03-wiki-system-testing) - In progress- [2025-08-03: Initial Setup](./2025-08-03-Initial-Setup) - Project foundation and deployment
+- [2025-08-03: Initial Setup](./2025-08-03-Initial-Setup) - Project foundation and deployment
 
 ### 🏗️ Architecture
 - [Tech Stack](./Tech-Stack) - Complete technology stack overview
