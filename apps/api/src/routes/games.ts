@@ -27,7 +27,7 @@ export async function gameRoutes(fastify: FastifyInstance) {
     Querystring: GameSearchParams;
     Reply: ApiResponse<GameSearchResult[]>;
   }>('/search', async (request, reply) => {
-    const { q, platform, limit = 20, offset = 0 } = request.query;
+    const { q, platform, limit = 20, offset = 0 } = request.query as GameSearchParams;
 
     if (!q || q.trim().length < 2) {
       return reply.status(400).send({

@@ -8,7 +8,7 @@ export async function shelfRoutes(fastify: FastifyInstance) {
     Querystring: ShelfParams;
   }>('/:userId', async (request, reply) => {
     const { userId } = request.params;
-    const { cursor, limit = 20, condition, platform, sortBy = 'addedAt', sortOrder = 'desc' } = request.query;
+    const { cursor, limit = 20, condition, platform, sortBy = 'addedAt', sortOrder = 'desc' } = request.query as any; // TODO: Add proper ShelfParams type
 
     // TODO: Implement shelf retrieval with privacy checks
     // Allow public access to public shelves, owner access to private shelves

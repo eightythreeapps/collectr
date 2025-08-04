@@ -10,7 +10,11 @@
       "Bash(chmod:*)",
       "Bash(pnpm --filter @collectr/web build)",
       "Bash(pnpm lint:*)",
-      "Bash(pnpm -r run lint)"
+      "Bash(pnpm -r run lint)",
+      "Bash(pnpm --filter @collectr/types build)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm type-check:*)",
+      "Bash(pnpm --filter @collectr/api type-check)"
     ],
     "deny": []
   }

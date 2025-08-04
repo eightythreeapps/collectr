@@ -178,7 +178,7 @@ export class IGDBService {
   static extractPublisher(involvedCompanies?: IGDBGame['involved_companies']): string {
     if (!involvedCompanies?.length) return 'Unknown';
     
-    const publisher = involvedCompanies.find(company => company.publisher);
+    const publisher = involvedCompanies.find((company: any) => company.publisher);
     return publisher?.company.name || involvedCompanies[0]?.company.name || 'Unknown';
   }
 
