@@ -14,7 +14,10 @@
       "Bash(pnpm --filter @collectr/types build)",
       "Bash(pnpm build:*)",
       "Bash(pnpm type-check:*)",
-      "Bash(pnpm --filter @collectr/api type-check)"
+      "Bash(pnpm --filter @collectr/api type-check)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(pnpm test:*)"
     ],
     "deny": []
   }
