@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
-    '@typescript-eslint/recommended',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'eslint-config-prettier',
   ],
   plugins: ['@typescript-eslint', 'import'],
@@ -8,11 +9,12 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
   },
   rules: {
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/prefer-const': 'error',
     '@typescript-eslint/no-var-requires': 'error',
     'import/order': [
       'error',
@@ -36,4 +38,5 @@ module.exports = {
     node: true,
     es2022: true,
   },
+  ignorePatterns: ['dist/**', 'node_modules/**'],
 };
