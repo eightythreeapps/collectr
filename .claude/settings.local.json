@@ -8,7 +8,9 @@
       "Bash(pnpm run:*)",
       "Bash(pnpm --filter @collectr/api build)",
       "Bash(chmod:*)",
-      "Bash(pnpm --filter @collectr/web build)"
+      "Bash(pnpm --filter @collectr/web build)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm -r run lint)"
     ],
     "deny": []
   }

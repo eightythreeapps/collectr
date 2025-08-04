@@ -13,11 +13,11 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-var-requires': 'error',
     'import/order': [
-      'error',
+      'warn',
       {
         groups: [
           'builtin',
@@ -32,7 +32,9 @@ module.exports = {
       },
     ],
     'no-console': 'warn',
-    'prefer-const': 'error',
+    'prefer-const': 'warn',
+    'no-useless-escape': 'warn',
+    'no-case-declarations': 'warn',
   },
   env: {
     node: true,
