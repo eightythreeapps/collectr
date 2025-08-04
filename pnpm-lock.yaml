@@ -157,6 +157,12 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.7(@types/react@18.3.23)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.0.0
+        version: 8.38.0(@typescript-eslint/parser@8.38.0(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2))(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2)
+      '@typescript-eslint/parser':
+        specifier: ^8.0.0
+        version: 8.38.0(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2)
       autoprefixer:
         specifier: ^10.4.0
         version: 10.4.21(postcss@8.5.6)
@@ -166,6 +172,12 @@ importers:
       eslint-config-next:
         specifier: 15.0.0
         version: 15.0.0(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2)
+      eslint-config-prettier:
+        specifier: ^9.0.0
+        version: 9.1.2(eslint@9.32.0(jiti@1.21.7))
+      eslint-plugin-import:
+        specifier: ^2.29.0
+        version: 2.32.0(@typescript-eslint/parser@8.38.0(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2))(eslint-import-resolver-typescript@3.10.1)(eslint@9.32.0(jiti@1.21.7))
       postcss:
         specifier: ^8.4.0
         version: 8.5.6
@@ -181,6 +193,9 @@ importers:
 
   packages/eslint-config:
     dependencies:
+      '@eslint/js':
+        specifier: ^9.6.0
+        version: 9.32.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.0.0
         version: 8.38.0(@typescript-eslint/parser@8.38.0(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2))(eslint@9.32.0(jiti@1.21.7))(typescript@5.9.2)
