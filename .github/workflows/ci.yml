@@ -1,5 +1,8 @@
 name: CI
 
+permissions:
+  security-events: write
+
 on:
   push:
     branches: [ main, develop ]
