@@ -73,7 +73,7 @@ export async function authMiddleware(
       emailVerified: decodedToken.email_verified || false,
     };
   } catch (error) {
-    request.log.warn({ error, url, method }, 'Authentication failed');
+    request.log.warn({ error, pathname, method }, 'Authentication failed');
     
     return reply.status(401).send({
       success: false,
