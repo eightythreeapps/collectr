@@ -50,10 +50,15 @@ jobs:
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
 
-    - name: Deploy Cloud Run API
+    - name: Build and Deploy Cloud Run API
       run: |
+        # Build the container image
+        gcloud builds submit ./apps/api \
+          --tag europe-west1-docker.pkg.dev/${{ secrets.FIREBASE_PROJECT_ID }}/cloud-run-source-deploy/collectr-api:latest
+        
+        # Deploy the built image to Cloud Run
         gcloud run deploy collectr-api \
-          --source ./apps/api \
+          --image europe-west1-docker.pkg.dev/${{ secrets.FIREBASE_PROJECT_ID }}/cloud-run-source-deploy/collectr-api:latest \
           --platform managed \
           --region europe-west1 \
           --allow-unauthenticated \
