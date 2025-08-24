@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read and write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Users can read and write their own games
+    match /users/{userId}/games/{gameId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Public game data (read-only)
+    match /games/{gameId} {
+      allow read: if true;
+      allow write: if false; // Only admin should write to game database
+    }
+    
+    // User profiles (public read, owner write)
+    match /profiles/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

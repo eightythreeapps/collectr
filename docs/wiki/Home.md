@@ -14,10 +14,15 @@ Welcome to the Collectr MVP development documentation. This wiki maintains detai
 
 ### 📝 Development Sessions
 - [Session Template](./Session-Template) - Template for documenting development work
-- [2025-08-03: Wiki System Testing](./2025-08-03-wiki-system-testing) - In progress- [2025-08-03: Initial Setup](./2025-08-03-Initial-Setup) - Project foundation and deployment
+- [2025-08-23: Authentication System Fix](./2025-08-23-authentication-system-fix) - ✅ Complete authentication system with emulators
+- [2025-08-17: Authentication UI Implementation](./2025-08-17-authentication-ui-implementation) - Initial auth UI work
+- [2025-08-03: Wiki System Testing](./2025-08-03-wiki-system-testing) - Wiki automation testing  
+- [2025-08-03: Initial Setup](./2025-08-03-Initial-Setup) - Project foundation and deployment
 
 ### 🏗️ Architecture
 - [Tech Stack](./Tech-Stack) - Complete technology stack overview
+- [Authentication System](./Authentication-System) - Complete auth setup guide
+- [Firebase Emulator Development](./Firebase-Emulator-Development) - Local development with emulators
 - [Database Schema](./Database-Schema) - Firestore data structure
 - [API Endpoints](./API-Endpoints) - Backend API documentation
 - [Security Rules](./Security-Rules) - Firebase security configuration
@@ -39,16 +44,20 @@ Welcome to the Collectr MVP development documentation. This wiki maintains detai
 
 - ✅ **Foundation**: Monorepo with TypeScript, Next.js, Fastify
 - ✅ **Backend**: Firebase (Firestore, Auth, Storage, Hosting)
+- ✅ **Authentication**: Complete system with Firebase Auth + emulators
 - ✅ **External APIs**: IGDB game search integration
+- ✅ **Development Environment**: Firebase emulators + comprehensive docs
 - ✅ **Deployment**: Live on Firebase Hosting
-- 🚧 **Next**: Authentication UI and game collection features
+- 🚧 **Next**: Game collection features and user profiles
 
 ## 🔗 Quick Links
 
 - [Live Application](https://collectr-8ae95.web.app)
 - [Firebase Console](https://console.firebase.google.com/project/collectr-8ae95)
-- [Latest Development Session](./2025-08-03-Initial-Setup)
+- [Local Development Setup](./Local-Development)
+- [Authentication Guide](./Authentication-System)
+- [Latest Development Session](./2025-08-23-authentication-system-fix)
 
 ---
 
-*Last Updated: 2025-08-03*
+*Last Updated: 2025-08-23*

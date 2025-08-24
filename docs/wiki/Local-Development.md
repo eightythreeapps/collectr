@@ -6,9 +6,23 @@ Complete guide for setting up and running Collectr locally.
 
 ### Required Software
 - **Node.js**: 20+ LTS (18.x works but shows warnings)
+- **Java Development Kit**: 11+ (for Firebase emulators)
 - **pnpm**: 9.x (`npm install -g pnpm`)
 - **Firebase CLI**: Latest (`npm install -g firebase-tools`)
 - **Git**: Latest version
+
+### Java Setup (Required for Firebase Emulators)
+```bash
+# macOS with Homebrew
+brew install openjdk@11
+
+# Set environment variables (add to ~/.zshrc or ~/.bashrc)
+export JAVA_HOME="/opt/homebrew/opt/openjdk@11"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# Verify installation
+java -version
+```
 
 ### Accounts Needed
 - **Firebase/Google Cloud**: For backend services
@@ -26,14 +40,31 @@ pnpm install
 ### 2. Environment Configuration
 
 **Web App** (`apps/web/.env.local`):
+
+*For Development (Firebase Emulators):*
 ```env
-# Firebase Configuration
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+# Firebase Configuration for Development/Emulators
+NEXT_PUBLIC_FIREBASE_API_KEY=demo-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=demo-collectr.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=demo-collectr
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=demo-collectr.firebasestorage.app
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=998912996227
+NEXT_PUBLIC_FIREBASE_APP_ID=demo-app-id
+
+# API Configuration
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+NEXT_PUBLIC_ENVIRONMENT=development
+```
+
+*For Production Firebase Project:*
+```env
+# Firebase Configuration for Production
+NEXT_PUBLIC_FIREBASE_API_KEY=your_production_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=collectr-8ae95.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=collectr-8ae95
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=collectr-8ae95.firebasestorage.app
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=998912996227
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_production_app_id
 
 # API Configuration
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
@@ -71,21 +102,36 @@ pnpm build
 
 ## Running Development Servers
 
-### Option 1: All Services (Recommended)
+### Option 1: Development with Firebase Emulators (Recommended)
+
+**Step 1: Start Firebase Emulators**
 ```bash
-./scripts/dev.sh
+# From project root
+firebase emulators:start
 ```
 
-This starts:
-- Firebase Emulators (ports 4000, 8080, 9099, 9199)
-- API Server (port 3001)
-- Web App (port 3000)
-
-### Option 2: Individual Services
-
-**Firebase Emulators:**
+**Step 2: Start Web App** (in separate terminal)
 ```bash
-cd firebase
+pnpm --filter @collectr/web dev
+```
+
+This setup provides:
+- **Firebase Auth Emulator**: http://localhost:9099
+- **Firestore Emulator**: http://localhost:8080  
+- **Storage Emulator**: http://localhost:9199
+- **Firebase UI Dashboard**: http://localhost:4000
+- **Web App**: http://localhost:3001 (or 3000)
+
+### Option 2: Production Firebase Connection
+
+**Firebase Emulators (for development only):**
+```bash
+firebase emulators:start --project=demo-collectr
+```
+
+**Production Firebase (for staging/testing):**
+```bash
+# Use production environment variables
 firebase emulators:start --project=collectr-8ae95
 ```
 
@@ -103,12 +149,12 @@ pnpm --filter @collectr/web dev
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| Web App | http://localhost:3000 | Next.js development server |
-| API Server | http://localhost:3001 | Fastify backend API |
-| Firebase UI | http://localhost:4000 | Emulator management interface |
-| Firestore | http://localhost:8080 | Database emulator |
-| Auth Emulator | http://localhost:9099 | Authentication emulator |
-| Storage | http://localhost:9199 | File storage emulator |
+| **Web App** | http://localhost:3001 | Next.js development server |
+| **API Server** | http://localhost:3001 | Fastify backend API |
+| **Firebase UI** | http://localhost:4000 | Emulator management interface |
+| **Firestore** | http://localhost:8080 | Database emulator |
+| **Auth Emulator** | http://localhost:9099 | Authentication emulator |
+| **Storage** | http://localhost:9199 | File storage emulator |
 
 ## API Testing
 
@@ -122,12 +168,31 @@ curl http://localhost:3001/health
 curl "http://localhost:3001/v1/games/search?q=mario&limit=3"
 ```
 
-### With Authentication
+### Authentication Testing
+
+**Test User Registration/Login:**
+1. Open http://localhost:3001
+2. Click "Sign In" or "Get Started"
+3. Use Firebase emulator (any email/password works):
+   ```
+   Email: test@collectr.dev
+   Password: password123
+   ```
+4. Or test Google OAuth with real Google account
+
+**Test API with Authentication:**
 ```bash
-# Get Firebase ID token first, then:
+# Get Firebase ID token from browser console after login:
+# firebase.auth().currentUser.getIdToken().then(console.log)
+
 curl -H "Authorization: Bearer YOUR_ID_TOKEN" \
      "http://localhost:3001/v1/users/me"
 ```
+
+**View Authentication Data:**
+- Open http://localhost:4000/auth
+- See all test users and authentication events
+- Manually add/remove users for testing
 
 ## Common Development Tasks
 
@@ -188,6 +253,23 @@ lsof -ti:8080 | xargs kill -9  # Firestore port
 ```
 
 ### Firebase Authentication Issues
+
+**Emulator Connection Problems:**
+```bash
+# Check if emulators are running
+curl http://localhost:4000
+
+# Restart emulators with clean data
+firebase emulators:start --clear
+```
+
+**Authentication Not Working:**
+- Verify app shows "Connected to Firebase emulators" in browser console
+- Check environment variables in `.env.local`
+- Ensure NEXT_PUBLIC_ENVIRONMENT=development
+- Try different browser if Google OAuth fails
+
+**Production Firebase Issues:**
 - Check Firebase project ID in environment files
 - Ensure Firebase CLI is logged in: `firebase login`
 - Verify project selection: `firebase use collectr-8ae95`
@@ -222,9 +304,12 @@ curl -X POST "https://id.twitch.tv/oauth2/token" \
 ### Daily Startup
 1. `git pull origin main`
 2. `pnpm install` (if package.json changed)
-3. `./scripts/dev.sh` or start services individually
-4. Open http://localhost:3000 to verify web app
-5. Test API with `curl http://localhost:3001/health`
+3. **Start Firebase emulators:** `firebase emulators:start`
+4. **Start web app** (new terminal): `pnpm --filter @collectr/web dev`
+5. **Verify setup:**
+   - Open http://localhost:3001 to verify web app
+   - Check authentication works (sign up/login)
+   - Test API with `curl http://localhost:3001/health`
 
 ### Before Committing
 1. `pnpm lint` - Fix any linting issues

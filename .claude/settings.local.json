@@ -17,8 +17,25 @@
       "Bash(pnpm --filter @collectr/api type-check)",
       "Bash(grep:*)",
       "Bash(find:*)",
-      "Bash(pnpm test:*)"
+      "Bash(pnpm test:*)",
+      "Bash(pnpm --filter @collectr/web dev)",
+      "Bash(curl:*)",
+      "Bash(./scripts/new-session.sh:*)",
+      "Bash(firebase emulators:start:*)",
+      "Bash(export JAVA_HOME=\"/opt/homebrew/opt/openjdk@11\")",
+      "Bash(export PATH=\"$JAVA_HOME/bin:$PATH\")",
+      "mcp__ide__getDiagnostics",
+      "Bash(pnpm --filter @collectr/web type-check)",
+      "Bash(pnpm --filter @collectr/web lint)",
+      "Bash(pnpm --filter @collectr/web lint --fix)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)"
     ],
-    "deny": []
+    "deny": [],
+    "additionalDirectories": [
+      "/opt/homebrew/opt"
+    ]
   }
 }
