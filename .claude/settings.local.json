@@ -55,7 +55,8 @@
       "Bash(gcloud iam workload-identity-pools providers:*)",
       "Bash(gcloud projects get-iam-policy:*)",
       "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )",
-      "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )"
+      "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )",
+      "Bash(gcloud projects add-iam-policy-binding:*)"
     ],
     "deny": [],
     "additionalDirectories": [
