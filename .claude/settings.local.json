@@ -37,7 +37,18 @@
       "Bash(firebase apps:list:*)",
       "Bash(firebase apps:sdkconfig:*)",
       "Bash(gh secret set:*)",
-      "Bash(gh secret:*)"
+      "Bash(gh secret:*)",
+      "Bash(gcloud iam service-accounts list:*)",
+      "Bash(firebase login:ci:*)",
+      "Bash(brew install:*)",
+      "Bash(gcloud auth:*)",
+      "Bash(gcloud config set:*)",
+      "Bash(gcloud iam workload-identity-pools list:*)",
+      "Bash(gcloud iam workload-identity-pools providers list:*)",
+      "Bash(gcloud iam service-accounts add-iam-policy-binding:*)",
+      "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )",
+      "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )",
+      "Bash(gh repo view:*)"
     ],
     "deny": [],
     "additionalDirectories": [
