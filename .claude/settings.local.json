@@ -56,7 +56,12 @@
       "Bash(gcloud projects get-iam-policy:*)",
       "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )",
       "Bash(github-actions-deployer@collectr-8ae95.iam.gserviceaccount.com )",
-      "Bash(gcloud projects add-iam-policy-binding:*)"
+      "Bash(gcloud projects add-iam-policy-binding:*)",
+      "Bash(gcloud artifacts repositories list:*)",
+      "Bash(gcloud artifacts repositories create:*)",
+      "Bash(gcloud artifacts repositories add-iam-policy-binding:*)",
+      "Bash(gcloud services list:*)",
+      "Bash(gcloud services enable:*)"
     ],
     "deny": [],
     "additionalDirectories": [
