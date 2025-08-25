@@ -50,6 +50,16 @@ jobs:
     - name: Setup Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
 
+    - name: Debug Authentication
+      run: |
+        echo "=== Authentication Debug Info ==="
+        gcloud auth list
+        gcloud config list
+        echo "=== WIF Provider ==="
+        echo "${{ secrets.WIF_PROVIDER }}"
+        echo "=== Service Account ==="  
+        echo "${{ secrets.WIF_SERVICE_ACCOUNT }}"
+
     - name: Build and Deploy Cloud Run API
       run: |
         # Build the container image
